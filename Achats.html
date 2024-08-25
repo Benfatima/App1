@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion Achats</title>
+    <link rel="icon" type="image/png" href="Images/image.png">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ 
+    <div class="page">
+<div class="menu">
+    <img src="Images\image.png"></img>
+    <div class="title">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="white" class="size-6" width="40" height="40">
+        <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+      </svg> 
+    <h1 > Achats</h1>
+    </div>
+    <a href="#" id="Commande-link" class="menu-link active">Bon de Commande</a>
+    <a href="#" id="Facture-link" class="menu-link">Facture proformat</a>
+    <a href="#" id="Reception-link" class="menu-link">Bon de réception</a>
+    <a href="#" id="Livraison-link" class="menu-link">Bon de Livraison</a>
+    <a href="#" id="Entrée-link" class="menu-link">Bon d'entrée</a>
+    
+</div>
+
+<div class="content">
+    <div id="Commande" class="section active ">
+        <div class="step-container">
+            <div class="steps">
+                <div class="step active " id="step1" onclick="goToStep(1)">Ajout d'un bon de Commande</div>
+                <div class="step" id="step2" onclick="goToStep(2)">Historique des commandes</div>
+            </div>
+        
+            <div class="form-container"style="background-color: #f3f8f2f9;">
+                <!-- Étape 1: Création de mon projet -->
+                
+                <div class="form-step active" id="form-step1">
+                    <div class="Form-element" style="margin-bottom: 5%;width: 100%;height: 70px; box-sizing:border-box;border-radius: 5%;">
+                        <h2 style="color: #82388C;">Ajout d'un bon de commande</h2>
+                    </div>
+                    <form id="Form" onsubmit="return validateAndSubmitForm()">
+                        <div class="Form">
+                        <div class="Form-element">
+                        <label for="IDDocument" >Id Document :</label>
+                        <input type="text" id="IDDocument" name="IDDocument" required>
+                       </div>
+
+                        <div class="Form-element">
+                        <label for="date">Date d'aujourd'hui :</label>
+                        <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="codif" >Codif :</label>
+                        <input type="text" id="codif" name="codif" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="propreot" >Id du Fournisseur :</label>
+                        <input type="text" id="propreot" name="propreot" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="état" >Etat de la commande :</label>
+                        <input type="text" id="état" name="état" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="imprime" >Imprime :</label>
+                        <input type="text" id="imprime" name="imprime" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="montant" >Montant :</label>
+                        <input type="text" id="montant" name="montant" required>
+                        </div>
+                         
+                    </div>
+                    <button type="submit"  style="margin-left: 70%;">Réinitialiser</button>
+                    <button type="submit"  style="margin-left: 70%;">Ajouter le Bon</button>
+                    </form>
+                </div>
+            
+                <!-- Étape 2: Confirmation -->
+                
+                    <div class="form-step" id="form-step2"><h2>Historique des bons de commandes</h2>
+                        <div class="search-box">
+                    
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.425-6.075a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                            </svg>
+                            <input type="text" placeholder="Rechercher...">
+                        </div>
+                    <table id="orderTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>Id Document</th>
+                                <th>Nom editeur</th>
+                                <th>Date</th>
+                                <th>Codif</th>
+                                <th>Nom du Fournisseur</th>
+                                <th>Etat de la commande</th>
+                                <th>Montant</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td>DOC001</td>
+                                <td>Benbouchama Fatima zahra</td>
+                                <td>2024-08-25</td>
+                                <td>COD123</td>
+                                <td>Fournisseur A</td>
+                                <td>En cours</td>
+                                <td>150.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" >
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM18.75 12a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+                                          </svg>
+                                          
+                            
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC002</td>
+                                <td>Benbouchama nadir</td>
+                                <td>2024-08-26</td>
+                                <td>COD124</td>
+                                <td>Fournisseur B</td>
+                                <td>Livré</td>
+                                <td>200.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC003</td>
+                                <td>Benbouchama Hakim</td>
+                                <td>2024-08-27</td>
+                                <td>COD125</td>
+                                <td>Fournisseur C</td>
+                                <td>Annulé</td>
+                                <td>175.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+        
+            </div>
+        </div>
+        
+        
+    </div>
+    <div id="Facture" class="section">
+        <div class="step-container">
+            <div class="steps">
+                <div class="step " id="step3" onclick="goToStep(3)">Ajout de Facture</div>
+                <div class="step" id="step4" onclick="goToStep(4)">Historique des factures</div>
+            </div>
+        
+            <div class="form-container"style="background-color: #edffec;">
+                
+                
+                <div class="form-step active" id="form-step3">
+                    <div class="Form-element" style="margin-bottom: 5%;width: 100%;height: 70px; box-sizing:border-box;border-radius: 5%;"><h2 style="color: #82388C;">Ajout d'une facture</h2></div>
+                    <form id="Form" onsubmit="return validateAndSubmitForm()">
+                        <div class="Form">
+                        <div class="Form-element">
+                        <label for="IDDocument" >Id Document :</label>
+                        <input type="text" id="IDDocument" name="IDDocument" required>
+                       </div>
+
+                        <div class="Form-element">
+                        <label for="date">Date d'aujourd'hui :</label>
+                        <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="codif" >Codif :</label>
+                        <input type="text" id="codif" name="codif" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="propreot" >Id du Fournisseur :</label>
+                        <input type="text" id="propreot" name="propreot" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="état" >Etat de la commande :</label>
+                        <input type="text" id="état" name="état" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="imprime" >Imprime :</label>
+                        <input type="text" id="imprime" name="imprime" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="montant" >Montant :</label>
+                        <input type="text" id="montant" name="montant" required>
+                        </div>
+                         
+                    </div>
+                    <button type="submit"  style="margin-left: 70%;">Ajouter le Bon</button>
+                    </form>
+                </div>
+            
+                <!-- Étape 2: Confirmation -->
+                <div class="form-step" id="form-step4">
+                    <h2>Historique des factures proformat</h2>
+                    <div class="search-box">
+                    
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.425-6.075a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                        </svg>
+                        <input type="text" placeholder="Rechercher...">
+                    </div>
+                    <table id="orderTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>Id Document</th>
+                                <th>Date</th>
+                                <th>Codif</th>
+                                <th>Id du Fournisseur</th>
+                                <th>Etat de la commande</th>
+                                <th>Imprime</th>
+                                <th>Montant</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td>DOC001</td>
+                                <td>2024-08-25</td>
+                                <td>COD123</td>
+                                <td>Fournisseur A</td>
+                                <td>En cours</td>
+                                <td>Oui</td>
+                                <td>150.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC002</td>
+                                <td>2024-08-26</td>
+                                <td>COD124</td>
+                                <td>Fournisseur B</td>
+                                <td>Livré</td>
+                                <td>Non</td>
+                                <td>200.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC003</td>
+                                <td>2024-08-27</td>
+                                <td>COD125</td>
+                                <td>Fournisseur C</td>
+                                <td>Annulé</td>
+                                <td>Oui</td>
+                                <td>175.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+        
+            </div>
+        </div>
+        
+    </div>
+   
+    <div id="Reception" class="section">
+        <div class="step-container">
+            <div class="steps">
+                <div class="step active" id="step5" onclick="goToStep(5)">Ajout de Bon de réception</div>
+                <div class="step" id="step6" onclick="goToStep(6)">Historique des bons de réception</div>
+            </div>
+        
+            <div class="form-container"style="background-color: #edffec;">
+                
+                
+                <div class="form-step active" id="form-step5">
+                    <div class="Form-element" style="margin-bottom: 5%;width: 100%;height: 70px; box-sizing:border-box;border-radius: 5%;"><h2 style="color: #82388C;">Ajout d'un bon de réception</h2></div>
+                    <form id="Form" onsubmit="return validateAndSubmitForm()">
+                        <div class="Form">
+                        <div class="Form-element">
+                        <label for="IDDocument" >Id Document :</label>
+                        <input type="text" id="IDDocument" name="IDDocument" required>
+                       </div>
+
+                        <div class="Form-element">
+                        <label for="date">Date d'aujourd'hui :</label>
+                        <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="codif" >Codif :</label>
+                        <input type="text" id="codif" name="codif" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="propreot" >Id du Fournisseur :</label>
+                        <input type="text" id="propreot" name="propreot" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="état" >Etat de la commande :</label>
+                        <input type="text" id="état" name="état" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="imprime" >Imprime :</label>
+                        <input type="text" id="imprime" name="imprime" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="montant" >Montant :</label>
+                        <input type="text" id="montant" name="montant" required>
+                        </div>
+                         
+                    </div>
+                    <button type="submit"  style="margin-left: 70%;">Ajouter le Bon</button>
+                    </form>
+                </div>
+            
+                <!-- Étape 2: Confirmation -->
+                <div class="form-step" id="form-step6">
+                    <h2>Historique des bons de réception</h2>
+                    <div class="search-box">
+                    
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.425-6.075a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                        </svg>
+                        <input type="text" placeholder="Rechercher...">
+                    </div>
+                    <table id="orderTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>Id Document</th>
+                                <th>Date</th>
+                                <th>Codif</th>
+                                <th>Id du Fournisseur</th>
+                                <th>Etat de la commande</th>
+                                <th>Imprime</th>
+                                <th>Montant</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td>DOC001</td>
+                                <td>2024-08-25</td>
+                                <td>COD123</td>
+                                <td>Fournisseur A</td>
+                                <td>En cours</td>
+                                <td>Oui</td>
+                                <td>150.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC002</td>
+                                <td>2024-08-26</td>
+                                <td>COD124</td>
+                                <td>Fournisseur B</td>
+                                <td>Livré</td>
+                                <td>Non</td>
+                                <td>200.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC003</td>
+                                <td>2024-08-27</td>
+                                <td>COD125</td>
+                                <td>Fournisseur C</td>
+                                <td>Annulé</td>
+                                <td>Oui</td>
+                                <td>175.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+        
+            </div>
+        </div>
+        
+        </div>
+    <div id="Livraison" class="section">
+        
+        <div class="step-container">
+            <div class="steps">
+                <div class="step active" id="step7" onclick="goToStep(7)">Ajout de bon de livraisons</div>
+                <div class="step" id="step8" onclick="goToStep(8)">Historique des bons de livraisons</div>
+            </div>
+        
+            <div class="form-container"style="background-color: #edffec;">
+                <!-- Étape 1: Création de mon projet -->
+                
+                <div class="form-step active" id="form-step7">
+                    <div class="Form-element" style="margin-bottom: 5%;width: 100%;height: 70px; box-sizing:border-box;border-radius: 5%;"><h2 style="color: #82388C;">Ajout d'un bon de livraison</h2></div>
+                    <form id="Form" onsubmit="return validateAndSubmitForm()">
+                        <div class="Form">
+                        <div class="Form-element">
+                        <label for="IDDocument" >Id Document :</label>
+                        <input type="text" id="IDDocument" name="IDDocument" required>
+                       </div>
+
+                        <div class="Form-element">
+                        <label for="date">Date d'aujourd'hui :</label>
+                        <input type="date" id="date" name="date" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="codif" >Codif :</label>
+                        <input type="text" id="codif" name="codif" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="propreot" >Id du Fournisseur :</label>
+                        <input type="text" id="propreot" name="propreot" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="état" >Etat de la commande :</label>
+                        <input type="text" id="état" name="état" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="imprime" >Imprime :</label>
+                        <input type="text" id="imprime" name="imprime" required>
+                        </div>
+
+                        <div class="Form-element">
+                        <label for="montant" >Montant :</label>
+                        <input type="text" id="montant" name="montant" required>
+                        </div>
+                         
+                    </div>
+                    <button type="submit"  style="margin-left: 70%;">Ajouter le Bon</button>
+                    </form>
+                </div>
+            
+                <!-- Étape 2: Confirmation -->
+                <div class="form-step" id="form-step8">
+                    <h2>Historique des bons de livraisons</h2>
+                    <div class="search-box">
+                    
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.425-6.075a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                        </svg>
+                        <input type="text" placeholder="Rechercher...">
+                    </div>
+                    <table id="orderTable" border="1">
+                        <thead>
+                            <tr>
+                                <th>Id Document</th>
+                                <th>Date</th>
+                                <th>Codif</th>
+                                <th>Id du Fournisseur</th>
+                                <th>Etat de la commande</th>
+                                <th>Imprime</th>
+                                <th>Montant</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                
+                                <td>DOC001</td>
+                                <td>2024-08-25</td>
+                                <td>COD123</td>
+                                <td>Fournisseur A</td>
+                                <td>En cours</td>
+                                <td>Oui</td>
+                                <td>150.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC002</td>
+                                <td>2024-08-26</td>
+                                <td>COD124</td>
+                                <td>Fournisseur B</td>
+                                <td>Livré</td>
+                                <td>Non</td>
+                                <td>200.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DOC003</td>
+                                <td>2024-08-27</td>
+                                <td>COD125</td>
+                                <td>Fournisseur C</td>
+                                <td>Annulé</td>
+                                <td>Oui</td>
+                                <td>175.00</td>
+                                <td>
+                                    <div class="action-container">
+                                        <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>
+                                        <div class="dropdown-menu">
+                                            <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                            <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+        
+           
+        </div>
+    </div>
+</div>
+        
+    <div id="Entrée" class="section">
+            <div class="step-container">
+                <div class="steps">
+                    <div class="step active" id="step9" onclick="goToStep(9)">Ajout d'un bon d'entrée</div>
+                    <div class="step" id="step10" onclick="goToStep(10)">Historique des bons d'entrée</div>
+                </div>
+            
+                <div class="form-container"style="background-color: #edffec;">
+                    <!-- Étape 1: Création de mon projet -->
+                    
+                    <div class="form-step active" id="form-step9">
+                        <div class="Form-element" style="margin-bottom: 5%;width: 100%;height: 70px; box-sizing:border-box;border-radius: 5%;"><h2 style="color: #82388C;">Ajout d'un bon d'entrée</h2></div>
+                        <form id="form-step9-form" onsubmit="return validateAndSubmitForm()">
+                            <div class="Form">
+                            <div class="Form-element">
+                            <label for="IDDocument" >Id Document :</label>
+                            <input type="text" id="IDDocument" name="IDDocument" required>
+                           </div>
+    
+                            <div class="Form-element">
+                            <label for="date">Date d'aujourd'hui :</label>
+                            <input type="date" id="date" name="date" required>
+                            </div>
+    
+                            <div class="Form-element">
+                            <label for="codif" >Codif :</label>
+                            <input type="text" id="codif" name="codif" required>
+                            </div>
+    
+                            <div class="Form-element">
+                            <label for="propreot" >Id du Fournisseur :</label>
+                            <input type="text" id="propreot" name="propreot" required>
+                            </div>
+    
+                            <div class="Form-element">
+                            <label for="état" >Etat de la commande :</label>
+                            <input type="text" id="état" name="état" required>
+                            </div>
+    
+                            <div class="Form-element">
+                            <label for="imprime" >Imprime :</label>
+                            <input type="text" id="imprime" name="imprime" required>
+                            </div>
+    
+                            <div class="Form-element">
+                            <label for="montant" >Montant :</label>
+                            <input type="text" id="montant" name="montant" required>
+                            </div>
+                             
+                        </div>
+                        <button type="submit"  style="margin-left: 70%;">Ajouter le Bon</button>
+                        </form>
+                    </div>
+                
+                    <!-- Étape 2: Confirmation -->
+                    <div class="form-step " id="form-step10">
+                        <h2>Historique des bons d'entrée'</h2>
+                        <div class="search-box">
+                    
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="search-icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35m1.425-6.075a7.5 7.5 0 1 0-15 0 7.5 7.5 0 0 0 15 0Z" />
+                            </svg>
+                            <input type="text" placeholder="Rechercher...">
+                        </div>
+                        <table id="orderTable" border="1">
+                            <thead>
+                                <tr>
+                                    <th>Id Document</th>
+                                    <th>Date</th>
+                                    <th>Codif</th>
+                                    <th>Id du Fournisseur</th>
+                                    <th>Etat de la commande</th>
+                                    <th>Imprime</th>
+                                    <th>Montant</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    
+                                    <td>DOC001</td>
+                                    <td>2024-08-25</td>
+                                    <td>COD123</td>
+                                    <td>Fournisseur A</td>
+                                    <td>En cours</td>
+                                    <td>Oui</td>
+                                    <td>150.00</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            <div class="dropdown-menu">
+                                                <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                                <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DOC002</td>
+                                    <td>2024-08-26</td>
+                                    <td>COD124</td>
+                                    <td>Fournisseur B</td>
+                                    <td>Livré</td>
+                                    <td>Non</td>
+                                    <td>200.00</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            <div class="dropdown-menu">
+                                                <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                                <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>DOC003</td>
+                                    <td>2024-08-27</td>
+                                    <td>COD125</td>
+                                    <td>Fournisseur C</td>
+                                    <td>Annulé</td>
+                                    <td>Oui</td>
+                                    <td>175.00</td>
+                                    <td>
+                                        <div class="action-container">
+                                            <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            </svg>
+                                            <div class="dropdown-menu">
+                                                <a href="#" onclick="editRow(this)">Modifier le bon</a>
+                                                <a href="#" onclick="deleteRow(this)">Supprimer le bon</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+            
+                </div>
+            </div>
+        
+        </div>
+</div>
+
+
+<script src="essaie.js"></script>
+</body>
+</html>
